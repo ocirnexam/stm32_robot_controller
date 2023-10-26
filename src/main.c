@@ -20,23 +20,19 @@ void SystemInit(void)
 
 int main(void)
 {
-  volatile int i = 0;
   if (SysClockConfig() == COUNTDOWN_EXCEEDED_ERROR)
   {
     return COUNTDOWN_EXCEEDED_ERROR;
   }
   USART_Init_PC();
-  IOPin output = {GPIOA, PIN0};
-  IOPin input = {GPIOB, PIN3};
-  GPIO_Config(input, GPIO_ANALOG_MODE);
-  Servo_Init(output);
-
+  
+  // Alt function PB3 is connected to TIM2_CH2
+  IOPin output = {GPIOB, PIN3, 0b0001};
+  GPIO_Config(output, GPIO_ALT_FUNCION);
+  Timer_Init_PWM(TIM2);
+  // Servo_Init(output);
   while (1)
   {
-    Servo_Write(i++%0xA0);
-    sprintf(buffer, "\n Angle: %i\n", i);
-    send_string_pc((char *)buffer);
-    msleep(5000);
   }
   return 0;
 }
