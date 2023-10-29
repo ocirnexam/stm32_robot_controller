@@ -27,12 +27,14 @@ int main(void)
   USART_Init_PC();
   
   // Alt function PB3 is connected to TIM2_CH2
-  IOPin output = {GPIOB, PIN3, 0b0001};
-  GPIO_Config(output, GPIO_ALT_FUNCION);
-  Timer_Init_PWM(TIM2);
-  // Servo_Init(output);
+  IOPin servo_ax0 = {GPIOB, PIN3, GPIO_ALT_FUNCION, GPIO_ALTF_TIM1_TIM2};
+  Servo servo = {servo_ax0, TIM2, 2};
+  // Servo_Init(servo);
+  volatile int i = 0;
   while (1)
   {
+    Servo_Write(servo, i++%180);
+    msleep(5000);
   }
   return 0;
 }
