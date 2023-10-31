@@ -27,14 +27,19 @@ int main(void)
   USART_Init_PC();
   
   // Alt function PB3 is connected to TIM2_CH2
-  IOPin servo_ax0 = {GPIOB, PIN3, GPIO_ALT_FUNCION, GPIO_ALTF_TIM1_TIM2};
-  Servo servo = {servo_ax0, TIM2, 2};
-  // Servo_Init(servo);
+  IOPin servo_ax0 = {GPIOB, PIN4, GPIO_ALT_FUNCION, GPIO_ALTF_TIM3_TIM5};
+  Servo servo = {servo_ax0, TIM3, 1};
+  Servo_Init(servo);
+  // GPIO_Config(servo_ax0);
   volatile int i = 0;
   while (1)
   {
-    Servo_Write(servo, i++%180);
-    msleep(5000);
+    TIM3->CR1 &= ~1;
+    Servo_Write(servo, i++%5);
+    TIM3->CR1 |= 1;
+    // sprintf((char *)buffer, "PB4 Output: %ld\r\n", GPIOB->ODR);
+    // send_string_pc((char *) buffer);
+    msleep(500);
   }
   return 0;
 }
