@@ -34,9 +34,7 @@ int main(void)
   volatile int i = 0;
   while (1)
   {
-    TIM3->CR1 &= ~1;
     Servo_Write(servo, i++%5);
-    TIM3->CR1 |= 1;
     // sprintf((char *)buffer, "PB4 Output: %ld\r\n", GPIOB->ODR);
     // send_string_pc((char *) buffer);
     msleep(500);
