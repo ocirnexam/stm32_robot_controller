@@ -46,7 +46,7 @@ src/main.c
 
 # ASM sources
 ASM_SOURCES =  \
-startup_stm32f446xx.s
+stm32f4_mcal/startup_stm32f446xx.s
 
 
 #######################################
@@ -121,7 +121,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = STM32F446RETx_FLASH.ld
+LDSCRIPT = stm32f4_mcal/STM32F446RETx_FLASH.ld
 
 # libraries
 LIBS = -lc -lm -lnosys 
